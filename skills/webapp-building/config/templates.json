@@ -1,0 +1,174 @@
+{
+  "version": "1.0.0",
+  "default_template": "default",
+  "templates": {
+    "default": {
+      "name": "Default",
+      "description": "标准 React + Vite + Tailwind 项目",
+      "path": "templates/default",
+      "tech_stack": {
+        "framework": "react",
+        "build_tool": "vite",
+        "css_framework": "tailwind",
+        "ui_library": "shadcn",
+        "language": "typescript"
+      },
+      "features": [
+        "dark_mode",
+        "responsive_design",
+        "css_variables"
+      ],
+      "dependencies": {
+        "required": [
+          "react",
+          "react-dom",
+          "tailwindcss",
+          "lucide-react"
+        ],
+        "optional": [
+          "recharts",
+          "date-fns"
+        ]
+      }
+    },
+    "blog": {
+      "name": "Blog",
+      "description": "博客网站模板，包含文章列表、详情页、评论功能",
+      "path": "templates/blog",
+      "extends": "default",
+      "sections": [
+        "Header",
+        "Hero",
+        "ArticleList",
+        "ArticleCard",
+        "Sidebar",
+        "Footer"
+      ],
+      "components": [
+        "badge",
+        "separator",
+        "scroll-area",
+        "avatar"
+      ]
+    },
+    "gallery": {
+      "name": "Gallery",
+      "description": "图片相册模板，包含网格布局、灯箱预览、分类筛选",
+      "path": "templates/gallery",
+      "extends": "default",
+      "sections": [
+        "Header",
+        "Hero",
+        "FilterBar",
+        "ImageGrid",
+        "Lightbox",
+        "Footer"
+      ],
+      "components": [
+        "dialog",
+        "tabs",
+        "skeleton",
+        "tooltip"
+      ]
+    },
+    "dashboard": {
+      "name": "Dashboard",
+      "description": "数据仪表盘模板，包含图表、统计卡片、数据表格",
+      "path": "templates/dashboard",
+      "extends": "default",
+      "sections": [
+        "Sidebar",
+        "Header",
+        "StatsCards",
+        "ChartSection",
+        "DataTable",
+        "RecentActivity"
+      ],
+      "components": [
+        "table",
+        "card",
+        "chart",
+        "select",
+        "calendar",
+        "popover",
+        "dropdown-menu"
+      ],
+      "dependencies": {
+        "additional": [
+          "recharts",
+          "date-fns"
+        ]
+      }
+    },
+    "landing": {
+      "name": "Landing Page",
+      "description": "营销落地页模板，包含特性展示、定价、CTA",
+      "path": "templates/landing",
+      "extends": "default",
+      "sections": [
+        "Navbar",
+        "Hero",
+        "Features",
+        "Testimonials",
+        "Pricing",
+        "CTA",
+        "Footer"
+      ],
+      "components": [
+        "button",
+        "card",
+        "badge",
+        "separator",
+        "accordion"
+      ]
+    },
+    "ecommerce": {
+      "name": "E-commerce",
+      "description": "电商产品页模板，包含商品展示、购物车、结算",
+      "path": "templates/ecommerce",
+      "extends": "default",
+      "sections": [
+        "Navbar",
+        "ProductGallery",
+        "ProductInfo",
+        "RelatedProducts",
+        "CartDrawer",
+        "Footer"
+      ],
+      "components": [
+        "button",
+        "card",
+        "badge",
+        "sheet",
+        "carousel",
+        "counter",
+        "select",
+        "separator"
+      ]
+    }
+  },
+  "global_settings": {
+    "output_base_path": "/mnt/okcomputer/output",
+    "default_port": 5173,
+    "preview_port": 4173,
+    "node_version": "20",
+    "package_manager": "npm",
+    "css_variables": {
+      "border_radius": "0.5rem",
+      "color_scheme": "zinc"
+    }
+  },
+  "file_templates": {
+    "component": {
+      "style": "typescript",
+      "props_interface": true,
+      "forward_ref": true,
+      "cn_util": true
+    },
+    "section": {
+      "wrapper_element": "section",
+      "container_class": "container mx-auto px-4",
+      "spacing": "py-16 md:py-24"
+    }
+  }
+}
