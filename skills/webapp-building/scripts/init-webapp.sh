@@ -3,7 +3,7 @@
 set -e
 
 PROJECT_NAME="${1:-My App}"
-OUTPUT_DIR="D:\code_info\mycode\foo1"
+OUTPUT_DIR="../../../.."
 PROJECT_DIR="$OUTPUT_DIR/app"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEMPLATE_DIR="$(dirname "$SCRIPT_DIR")/templates/default"

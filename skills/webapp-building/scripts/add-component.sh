@@ -3,7 +3,7 @@
 set -e
 
 COMPONENT_NAME=$1
-PROJECT_DIR="/mnt/okcomputer/output/app"
+PROJECT_DIR="../../../../app"
 UI_DIR="$PROJECT_DIR/src/components/ui"
 TEMPLATE_DIR="$(dirname "$0")/../templates/components"
 

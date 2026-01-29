@@ -61,7 +61,7 @@ Todo 6: 构建和部署
 **命令**: `scripts/init-webapp.sh "<项目名称>"`
 **参数**:
   - project_name (string, required): 项目名称
-**输出**: 创建 `D:\code_info\mycode\foo1\app` 目录
+**输出**: 创建 `../../../../app` 目录
 
 ### 2. add-section
 **描述**: 添加页面区块组件

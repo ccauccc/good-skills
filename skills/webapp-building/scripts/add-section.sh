@@ -3,7 +3,7 @@
 set -e
 
 SECTION_NAME=$1
-PROJECT_DIR="/mnt/okcomputer/output/app"
+PROJECT_DIR="../../../../app"
 SECTIONS_DIR="$PROJECT_DIR/src/sections"
 COMPONENTS_DIR="$(dirname "$0")/../templates/components"
 

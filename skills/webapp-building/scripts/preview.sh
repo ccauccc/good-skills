@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_DIR="/mnt/okcomputer/output/app"
+PROJECT_DIR="../../../../app"
 
 if [ ! -d "$PROJECT_DIR/dist" ]; then
     echo "Error: Build output not found"

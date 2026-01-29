@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_DIR="/mnt/okcomputer/output/app"
+PROJECT_DIR="../../../../app"
 
 if [ ! -d "$PROJECT_DIR" ]; then
     echo "Error: Project not found at $PROJECT_DIR"
