@@ -258,3 +258,707 @@ import { IconName } from "lucide-react"
 - [ ] 样式是否响应式?
 - [ ] 是否测试过预览?
 - [ ] 是否有明显的 bug?
+
+## 组件使用指南
+
+### 分类概览
+
+| 分类 | 组件 |
+|------|------|
+| **布局容器** | card, dialog, drawer, sheet, tabs, accordion, collapsible |
+| **表单输入** | button, input, textarea, select, checkbox, radio-group, switch, slider, form, field |
+| **反馈提示** | alert, alert-dialog, sonner, spinner, skeleton, progress |
+| **导航组件** | navigation-menu, breadcrumb, pagination, menubar, sidebar |
+| **数据展示** | table, badge, avatar, chart, carousel, empty |
+| **交互增强** | tooltip, popover, hover-card, dropdown-menu, context-menu, command |
+
+---
+
+### 布局容器组件
+
+#### Card（卡片）
+
+**使用场景**: 信息分组展示、产品列表、用户卡片、统计数据卡片
+
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+
+<Card className="w-[350px]">
+  <CardHeader>
+    <CardTitle>标题</CardTitle>
+    <CardDescription>描述文字</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>主要内容区域</p>
+  </CardContent>
+  <CardFooter className="flex justify-between">
+    <Button variant="outline">取消</Button>
+    <Button>确认</Button>
+  </CardFooter>
+</Card>
+```
+
+**最佳实践**:
+- 卡片间距使用 `gap-4` 或 `gap-6`
+- 卡片网格使用 `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3`
+- 悬停效果: `hover:shadow-lg transition-shadow duration-200`
+
+---
+
+#### Dialog（对话框）
+
+**使用场景**: 确认操作、表单弹窗、详情查看、警告提示
+
+```tsx
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>打开对话框</Button>
+  </DialogTrigger>
+  <DialogContent className="sm:max-w-[425px]">
+    <DialogHeader>
+      <DialogTitle>编辑资料</DialogTitle>
+      <DialogDescription>修改你的个人信息，完成后点击保存。</DialogDescription>
+    </DialogHeader>
+    <div className="grid gap-4 py-4">
+      {/* 表单内容 */}
+    </div>
+    <DialogFooter>
+      <Button type="submit">保存更改</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+**控制开关状态**:
+```tsx
+const [open, setOpen] = useState(false)
+<Dialog open={open} onOpenChange={setOpen}>
+  {/* ... */}
+</Dialog>
+```
+
+---
+
+#### Tabs（标签页）
+
+**使用场景**: 内容切换、设置页面、多视图展示
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+
+<Tabs defaultValue="tab1" className="w-full">
+  <TabsList className="grid w-full grid-cols-3">
+    <TabsTrigger value="tab1">概览</TabsTrigger>
+    <TabsTrigger value="tab2">详情</TabsTrigger>
+    <TabsTrigger value="tab3">设置</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">概览内容</TabsContent>
+  <TabsContent value="tab2">详情内容</TabsContent>
+  <TabsContent value="tab3">设置内容</TabsContent>
+</Tabs>
+```
+
+---
+
+#### Sheet（侧边抽屉）
+
+**使用场景**: 移动端菜单、筛选面板、表单编辑、详情查看
+
+```tsx
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
+
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">打开侧边栏</Button>
+  </SheetTrigger>
+  <SheetContent side="right"> {/* side: left | right | top | bottom */}
+    <SheetHeader>
+      <SheetTitle>筛选条件</SheetTitle>
+      <SheetDescription>选择你需要的筛选条件</SheetDescription>
+    </SheetHeader>
+    {/* 内容 */}
+  </SheetContent>
+</Sheet>
+```
+
+---
+
+#### Accordion（手风琴）
+
+**使用场景**: FAQ 列表、多级菜单、可折叠内容区
+
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+
+<Accordion type="single" collapsible className="w-full">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>问题一：如何使用？</AccordionTrigger>
+    <AccordionContent>这里是详细的使用说明...</AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>问题二：常见问题</AccordionTrigger>
+    <AccordionContent>这里是常见问题解答...</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+**参数说明**:
+- `type="single"`: 单个展开
+- `type="multiple"`: 多个同时展开
+- `collapsible`: 允许全部折叠
+
+---
+
+### 表单输入组件
+
+#### Button（按钮）
+
+**变体类型**:
+```tsx
+<Button variant="default">主要按钮</Button>
+<Button variant="secondary">次要按钮</Button>
+<Button variant="outline">描边按钮</Button>
+<Button variant="ghost">幽灵按钮</Button>
+<Button variant="link">链接按钮</Button>
+<Button variant="destructive">危险按钮</Button>
+```
+
+**尺寸**:
+```tsx
+<Button size="sm">小按钮</Button>
+<Button size="default">默认</Button>
+<Button size="lg">大按钮</Button>
+<Button size="icon"><Plus /></Button>
+```
+
+**加载状态**:
+```tsx
+<Button disabled>
+  <Spinner className="mr-2 h-4 w-4" />
+  处理中...
+</Button>
+```
+
+---
+
+#### Input（输入框）
+
+**基础用法**:
+```tsx
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+<div className="grid w-full max-w-sm items-center gap-1.5">
+  <Label htmlFor="email">邮箱</Label>
+  <Input type="email" id="email" placeholder="请输入邮箱" />
+</div>
+```
+
+**带图标**:
+```tsx
+<div className="relative">
+  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+  <Input className="pl-10" placeholder="搜索..." />
+</div>
+```
+
+---
+
+#### Select（选择器）
+
+```tsx
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+
+<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="选择分类" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="all">全部</SelectItem>
+    <SelectItem value="travel">旅行</SelectItem>
+    <SelectItem value="family">家庭</SelectItem>
+    <SelectItem value="work">工作</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+**受控模式**:
+```tsx
+const [value, setValue] = useState("")
+<Select value={value} onValueChange={setValue}>
+  {/* ... */}
+</Select>
+```
+
+---
+
+#### Checkbox（复选框）
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+
+<div className="flex items-center space-x-2">
+  <Checkbox id="terms" />
+  <Label htmlFor="terms">我同意服务条款</Label>
+</div>
+```
+
+**受控模式**:
+```tsx
+const [checked, setChecked] = useState(false)
+<Checkbox checked={checked} onCheckedChange={setChecked} />
+```
+
+---
+
+#### Switch（开关）
+
+```tsx
+import { Switch } from "@/components/ui/switch"
+
+<div className="flex items-center space-x-2">
+  <Switch id="notifications" />
+  <Label htmlFor="notifications">启用通知</Label>
+</div>
+```
+
+---
+
+#### Form（表单）+ Field（字段）
+
+**完整表单示例**:
+```tsx
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+
+const formSchema = z.object({
+  username: z.string().min(2, "用户名至少2个字符"),
+  email: z.string().email("请输入有效的邮箱"),
+})
+
+function MyForm() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { username: "", email: "" },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>用户名</FormLabel>
+              <FormControl>
+                <Input placeholder="输入用户名" {...field} />
+              </FormControl>
+              <FormDescription>这是你的公开显示名称</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">提交</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+---
+
+### 反馈提示组件
+
+#### Alert（警告提示）
+
+```tsx
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle, CheckCircle, Info } from "lucide-react"
+
+{/* 信息提示 */}
+<Alert>
+  <Info className="h-4 w-4" />
+  <AlertTitle>提示</AlertTitle>
+  <AlertDescription>这是一条信息提示</AlertDescription>
+</Alert>
+
+{/* 成功提示 */}
+<Alert variant="default" className="border-green-500 text-green-700">
+  <CheckCircle className="h-4 w-4" />
+  <AlertTitle>成功</AlertTitle>
+  <AlertDescription>操作已成功完成</AlertDescription>
+</Alert>
+
+{/* 错误提示 */}
+<Alert variant="destructive">
+  <AlertCircle className="h-4 w-4" />
+  <AlertTitle>错误</AlertTitle>
+  <AlertDescription>操作失败，请重试</AlertDescription>
+</Alert>
+```
+
+---
+
+#### Sonner（Toast 通知）
+
+```tsx
+import { toast } from "sonner"
+
+// 在组件中调用
+toast.success("保存成功")
+toast.error("操作失败")
+toast.info("正在处理...")
+toast.warning("请注意")
+
+// 带描述
+toast.success("保存成功", {
+  description: "你的更改已保存到服务器",
+})
+
+// 带操作按钮
+toast("文件已删除", {
+  action: {
+    label: "撤销",
+    onClick: () => console.log("撤销删除"),
+  },
+})
+```
+
+**注意**: 需要在 App.tsx 中添加 `<Toaster />` 组件
+
+---
+
+#### Spinner（加载指示器）
+
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+
+<Spinner className="h-6 w-6" />
+
+{/* 按钮加载状态 */}
+<Button disabled>
+  <Spinner className="mr-2 h-4 w-4" />
+  加载中...
+</Button>
+
+{/* 页面加载 */}
+<div className="flex h-screen items-center justify-center">
+  <Spinner className="h-8 w-8" />
+</div>
+```
+
+---
+
+#### Skeleton（骨架屏）
+
+```tsx
+import { Skeleton } from "@/components/ui/skeleton"
+
+{/* 卡片骨架 */}
+<Card>
+  <CardHeader>
+    <Skeleton className="h-4 w-[250px]" />
+    <Skeleton className="h-4 w-[200px]" />
+  </CardHeader>
+  <CardContent>
+    <Skeleton className="h-[200px] w-full" />
+  </CardContent>
+</Card>
+
+{/* 列表骨架 */}
+<div className="space-y-3">
+  {[1, 2, 3].map((i) => (
+    <div key={i} className="flex items-center space-x-4">
+      <Skeleton className="h-12 w-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+    </div>
+  ))}
+</div>
+```
+
+---
+
+#### Progress（进度条）
+
+```tsx
+import { Progress } from "@/components/ui/progress"
+
+<Progress value={60} className="w-full" />
+
+{/* 带标签 */}
+<div className="space-y-2">
+  <div className="flex justify-between text-sm">
+    <span>上传进度</span>
+    <span>60%</span>
+  </div>
+  <Progress value={60} />
+</div>
+```
+
+---
+
+### 导航组件
+
+#### Breadcrumb（面包屑）
+
+```tsx
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">首页</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/albums">相册</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>旅行照片</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+---
+
+#### Pagination（分页）
+
+```tsx
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from "@/components/ui/pagination"
+
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+---
+
+### 数据展示组件
+
+#### Table（表格）
+
+```tsx
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>名称</TableHead>
+      <TableHead>状态</TableHead>
+      <TableHead className="text-right">金额</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {data.map((item) => (
+      <TableRow key={item.id}>
+        <TableCell className="font-medium">{item.name}</TableCell>
+        <TableCell>
+          <Badge variant={item.status === 'active' ? 'default' : 'secondary'}>
+            {item.status}
+          </Badge>
+        </TableCell>
+        <TableCell className="text-right">{item.amount}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+```
+
+---
+
+#### Badge（徽章）
+
+```tsx
+import { Badge } from "@/components/ui/badge"
+
+<Badge>默认</Badge>
+<Badge variant="secondary">次要</Badge>
+<Badge variant="outline">描边</Badge>
+<Badge variant="destructive">危险</Badge>
+
+{/* 常见用法 */}
+<Badge className="bg-green-100 text-green-800">已完成</Badge>
+<Badge className="bg-yellow-100 text-yellow-800">进行中</Badge>
+<Badge className="bg-red-100 text-red-800">已取消</Badge>
+```
+
+---
+
+#### Avatar（头像）
+
+```tsx
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+
+<Avatar>
+  <AvatarImage src="/avatar.jpg" alt="用户头像" />
+  <AvatarFallback>CN</AvatarFallback>
+</Avatar>
+
+{/* 头像组 */}
+<div className="flex -space-x-2">
+  {users.map((user) => (
+    <Avatar key={user.id} className="border-2 border-background">
+      <AvatarImage src={user.avatar} />
+      <AvatarFallback>{user.initials}</AvatarFallback>
+    </Avatar>
+  ))}
+</div>
+```
+
+---
+
+#### Empty（空状态）
+
+```tsx
+import { Empty } from "@/components/ui/empty"
+import { FileX } from "lucide-react"
+
+<Empty
+  icon={<FileX className="h-12 w-12" />}
+  title="暂无数据"
+  description="当前没有任何记录"
+>
+  <Button>添加数据</Button>
+</Empty>
+```
+
+---
+
+### 交互增强组件
+
+#### Tooltip（文字提示）
+
+```tsx
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
+
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline" size="icon">
+        <Settings className="h-4 w-4" />
+      </Button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>设置</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+---
+
+#### Dropdown Menu（下拉菜单）
+
+```tsx
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel } from "@/components/ui/dropdown-menu"
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="ghost" size="icon">
+      <MoreVertical className="h-4 w-4" />
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end">
+    <DropdownMenuLabel>操作</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>
+      <Edit className="mr-2 h-4 w-4" />
+      编辑
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+      <Copy className="mr-2 h-4 w-4" />
+      复制
+    </DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem className="text-destructive">
+      <Trash className="mr-2 h-4 w-4" />
+      删除
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+---
+
+#### Popover（弹出框）
+
+```tsx
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline">打开弹出框</Button>
+  </PopoverTrigger>
+  <PopoverContent className="w-80">
+    <div className="grid gap-4">
+      <div className="space-y-2">
+        <h4 className="font-medium leading-none">尺寸设置</h4>
+        <p className="text-sm text-muted-foreground">设置组件的大小</p>
+      </div>
+      {/* 内容 */}
+    </div>
+  </PopoverContent>
+</Popover>
+```
+
+---
+
+#### Command（命令面板）
+
+**使用场景**: 快捷键面板、搜索命令、快速导航
+
+```tsx
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command"
+
+<Command className="rounded-lg border shadow-md">
+  <CommandInput placeholder="搜索命令..." />
+  <CommandList>
+    <CommandEmpty>未找到结果</CommandEmpty>
+    <CommandGroup heading="建议">
+      <CommandItem>
+        <Calendar className="mr-2 h-4 w-4" />
+        <span>日历</span>
+      </CommandItem>
+      <CommandItem>
+        <Settings className="mr-2 h-4 w-4" />
+        <span>设置</span>
+      </CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+```
+
+---
